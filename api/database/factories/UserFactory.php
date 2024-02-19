@@ -23,12 +23,13 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+      return [
+            'name' => $this->faker->name,
+            'phone' => '078' . $this->faker->randomNumber(7, true), // Adjust according to your needs
+            'password' => bcrypt('password'), // You can use Hash::make('password') as well
+            // 'email' => $this->faker->unique()->safeEmail, // Remove or comment out this line if your schema does not include an email field
+            'sms_code' => '1234', // Example sms_code, adjust as necessary
+            'phone_verified_at' => now(),
         ];
     }
 
