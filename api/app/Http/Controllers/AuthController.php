@@ -19,7 +19,7 @@ class AuthController extends Controller
         $validatedData = $request->validated();
 
 
-        $smsCode = rand(1000, 9999);
+        $smsCode = 123;
 
         $user = User::create([
             'name' => $validatedData['name'],

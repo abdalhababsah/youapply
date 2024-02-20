@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Password\PasswordResetRequest;
+use App\Http\Requests\Password\ResetPasswordRequest;
 class ResetPasswordController extends Controller
 {
-    public function requestPasswordReset(Request $request)
-    {
-        $request->validate([
-            'phone' => 'required|exists:users,phone',
-        ]);
-
+    public function requestPasswordReset(PasswordResetRequest $request)
+{
         $user = User::where('phone', $request->phone)->firstOrFail();
 
         $smsCode = 123;
@@ -24,13 +22,8 @@ class ResetPasswordController extends Controller
         return response()->json(['message' =>  "Your password reset code is: $smsCode"]);
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate([
-            'phone' => 'required|exists:users,phone',
-            'sms_code' => 'required',
-            'password' => 'required|min:6|confirmed',
-        ]);
 
         $user = User::where('phone', $request->phone)->where('sms_code', $request->sms_code)->first();
 
