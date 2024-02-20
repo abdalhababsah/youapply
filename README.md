@@ -1,6 +1,6 @@
 # youapply
 
-Authentication API
+<!-- Authentication API -->
 
 1. Register
 
@@ -177,3 +177,62 @@ Content:
     {
         "message": "Product deleted successfully"
     }
+
+
+
+<!-- RESET PASSWORD  -->
+
+1.Request Password Reset
+
+Endpoint
+POST /api/request-password-reset
+
+Request Parameters
+phone (required)
+
+Successful Response
+Status Code: 200 OK
+Content:
+
+{
+  "message": "Your password reset code is: [smsCode]"
+}
+
+Errors
+Status Code: 422 Unprocessable Entity
+
+Missing or invalid phone number.
+Phone number does not exist in the system.
+
+
+2. Reset Password
+
+Endpoint
+POST /api/reset-password
+
+Description
+
+Completes the password reset process by allowing the user to set a new password, using the SMS code sent to their phone as verification.
+
+Request Parameters
+
+    phone (required): The phone number of the user resetting the password.
+    sms_code (required): The SMS code sent to the user's phone.
+    password (required): The new password for the user.
+    password_confirmation (required): Confirmation of the new password (must match the password field).
+    
+Successful Response
+Status Code: 200 OK
+Content:
+
+    {
+      "message": "Password has been reset successfully."
+    }
+    
+    
+Errors
+
+Status Code: 422 Unprocessable Entity 
+    -Missing or invalid request parameters (phone,sms_code, password, password_confirmation).
+    -Invalid phone number or SMS code. 
+    -Password criteria not met (e.g., minimum length,  confirmation mismatch).
